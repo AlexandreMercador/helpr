@@ -61,6 +61,16 @@ public class ClienteService {
 		oldObj = new Cliente(objDto);
 		return repository.save(oldObj);
 	}
+
+	public void deleteCliente(Integer id) {
+		Cliente obj = findById(id);
+		if(obj.getChamados().size() > 0) {
+			throw new DataIntegrityViolationException("O Cliente: "+
+		id+" tem chamados no sistema: "+
+		obj.getChamados().size());
+		}
+		repository.deleteById(id);
+	}
 	
 
 }
